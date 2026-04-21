@@ -1,24 +1,16 @@
-# NAD PORTFOLIO | Cinematic & Modern
+# React + Vite
 
-A dual-site portfolio system for **Nadjibullah Uwabato**. 
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Structure
-- `/public-site`: The high-end, cinematic public portfolio.
-- `/admin-site`: The secure control panel for managing portfolio content.
+Currently, two official plugins are available:
 
-## Features
-- **Cinematic Design**: High-contrast, premium typography (Outfit & Inter), and smooth visual transitions.
-- **Dynamic Content**: Real-time synchronization with Firebase Firestore.
-- **Project Filtering**: categorization for Video/AI Film and Website/Graphic projects.
-- **In-App Previews**: Cinematic modals for viewing YouTube, Drive, or External links without leaving the site.
-- **Admin Control**: Add or delete projects with instant global updates.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Setup
-1. **Firebase**: Deployment is configured for `nadportfolio.web.app`.
-2. **Firestore Rules**: Deploy the included `firestore.rules` to enforce secure administrative access.
-3. **Admin Access**:
-   - **Method**: Email/Password or Authorized Google Account.
-   - **Signup**: Available via the login interface for new administrators.
+## React Compiler
 
-## Deployment
-Update your `firebase.json` if you wish to deploy specific folders to specific domains or paths.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .glass-panel {
+    @apply bg-zinc-950/80 border border-zinc-800 backdrop-blur-xl shadow-2xl;
+  }
+}
+
+body {
+  background-color: #000;
+  color: #d4d4d8;
+  font-family: 'Inter', sans-serif;
+}

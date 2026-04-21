@@ -1,0 +1,31 @@
+export default function About() {
+    return (
+        <div className="pt-48 pb-20 px-8 max-w-7xl mx-auto">
+            <h1 className="text-8xl font-black text-white uppercase tracking-tighter mb-16 font-outfit">ABOUT NAD</h1>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                <div className="aspect-square bg-zinc-900 rounded-[4rem] overflow-hidden border border-zinc-800">
+                    <img src="https://via.placeholder.com/800x800" alt="Nadjibullah Uwabato" className="w-full h-full object-cover grayscale opacity-80" />
+                </div>
+                <div className="space-y-8">
+                    <h2 className="text-3xl font-black text-amber-500 uppercase tracking-widest">Nadjibullah Uwabato</h2>
+                    <p className="text-xl text-zinc-400 leading-relaxed font-light">
+                        A visionary director and creative engineer dedicated to the intersection of cinematic storytelling and digital innovation. 
+                        With a focus on AI-driven narrative and high-performance web architecture, NAD PORTAL serves as the central node for 
+                        experimental and professional visual productions.
+                    </p>
+                    <div className="grid grid-cols-2 gap-8 pt-8">
+                        <div>
+                            <p className="text-[10px] font-black uppercase text-zinc-700 tracking-widest mb-2">Primary Domain</p>
+                            <p className="text-white font-bold uppercase tracking-tighter">Film & Production</p>
+                        </div>
+                        <div>
+                            <p className="text-[10px] font-black uppercase text-zinc-700 tracking-widest mb-2">Secondary Node</p>
+                            <p className="text-white font-bold uppercase tracking-tighter">Creative Engineering</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
