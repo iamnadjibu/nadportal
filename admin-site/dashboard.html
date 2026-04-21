@@ -14,61 +14,12 @@
 
     <div class="flex">
         <div id="sidebar-target"></div>
-
-        <!-- Content -->
-        <main class="flex-1 ml-80 p-16">
-            <h1 class="text-6xl font-black text-white font-outfit uppercase tracking-tighter mb-12">INTELLIGENCE</h1>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <div class="glass-panel p-10 rounded-[3rem] shadow-2xl">
-                    <p class="text-white text-[10px] font-black uppercase mb-8">Video Views Analytics</p>
-                    <canvas id="viewsChart"></canvas>
-                </div>
-                <div class="glass-panel p-10 rounded-[3rem] shadow-2xl">
-                    <p class="text-white text-[10px] font-black uppercase mb-8">System Clicks (Web vs Graphics)</p>
-                    <canvas id="clicksChart"></canvas>
-                </div>
-            </div>
-        </main>
+        <div id="app-root" class="flex-1"></div>
     </div>
 
-    <script type="module">
-        import { db, auth } from '../shared/firebase-config.js';
-        import { onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import '../shared/nav-injector.js';
-        import '../shared/auth-check.js';
-
-        lucide.createIcons();
-
-        document.getElementById('logout').onclick = () => signOut(auth);
-
-        onSnapshot(collection(db, 'nad_projects'), (snap) => {
-            const projects = snap.docs.map(d => d.data());
-            initCharts(projects);
-        });
-
-        function initCharts(data) {
-            const viewsCtx = document.getElementById('viewsChart').getContext('2d');
-            const clicksCtx = document.getElementById('clicksChart').getContext('2d');
-
-            new Chart(viewsCtx, {
-                type: 'bar',
-                data: {
-                    labels: data.filter(p => ['FILM', 'AI FILM'].includes(p.type)).map(p => p.title),
-                    datasets: [{ label: 'Views', data: data.filter(p => ['FILM', 'AI FILM'].includes(p.type)).map(p => p.views || 0), backgroundColor: '#f59e0b' }]
-                }
-            });
-
-            new Chart(clicksCtx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar'], // Mock temporal labels
-                    datasets: [
-                        { label: 'Websites', data: [12, 19, 3], borderColor: '#fff' },
-                        { label: 'Graphics', data: [5, 2, 9], borderColor: '#f59e0b' }
-                    ]
-                }
-            });
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="../shared/nav-injector.js"></script>
+    <script type="module" src="dashboard.js"></script>
+    <script type="module" src="../shared/auth-check.js"></script>
 </body>
 </html>

@@ -11,34 +11,12 @@
 </head>
 <body class="bg-black text-zinc-300 antialiased overflow-x-hidden">
     <div id="navbar-target"></div>
-
-    <div class="pt-48 pb-20 px-8 max-w-7xl mx-auto">
-        <h1 class="text-8xl font-black text-white uppercase tracking-tighter mb-12 font-outfit">GRAPHICS</h1>
-        <div id="graphics-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-             <p class="text-zinc-800 uppercase font-black tracking-widest text-xs">Accessing Aesthetic Nodes...</p>
-        </div>
-    </div>
+    <div id="app-root"></div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
     <script type="module">
-        import { db, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        
-        const q = query(collection(db, 'nad_projects'), where('type', '==', 'GRAPHIC'));
-        onSnapshot(q, (snap) => {
-            const grid = document.getElementById('graphics-grid');
-            grid.innerHTML = snap.docs.map(doc => {
-                const p = doc.data();
-                return `
-                    <div class="bg-zinc-900/50 rounded-[3rem] overflow-hidden border border-zinc-900 group">
-                        <img src="${p.thumbnail}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700">
-                        <div class="p-8">
-                            <h3 class="text-2xl font-black text-white uppercase tracking-tighter">${p.title}</h3>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        });
+        import { initContentPage } from './content-renderer.js';
+        initContentPage('GRAPHIC', 'GRAPHICS', 'Aesthetic Asset Nodes');
     </script>
 </body>
 </html>

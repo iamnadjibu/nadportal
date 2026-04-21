@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAM NAD | Home</title>
+    <title>IAM NAD | Visionary Directing</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -11,49 +11,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-black text-zinc-300 antialiased overflow-x-hidden">
+    <!-- Component Targets -->
     <div id="navbar-target"></div>
-
-    <section class="h-screen flex items-center justify-center text-center px-4 relative">
-        <div class="relative z-10 max-w-6xl">
-            <h2 class="text-amber-500 uppercase tracking-[0.5em] text-xs font-black mb-8 hero-anim">Nadjibullah Uwabato</h2>
-            <h1 class="text-7xl md:text-9xl font-black text-white uppercase tracking-tighter mb-8 font-outfit hero-anim">Visionary <br> Directing</h1>
-            <a href="films.html" class="inline-block bg-white text-black px-12 py-5 rounded-full font-black uppercase tracking-widest text-xs hover:bg-amber-500 transition-all hero-anim">See Creations</a>
-        </div>
-        <div class="absolute inset-0 bg-stardust opacity-20"></div>
-    </section>
-
-    <!-- Highlights Section -->
-    <section class="py-32 bg-zinc-950">
-        <div class="max-w-7xl mx-auto px-8">
-            <h2 class="text-4xl font-black text-white mb-20 uppercase tracking-tighter font-outfit">The Highlight Cut</h2>
-            <div id="highlights-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                <!-- Injected via Home.js -->
-            </div>
-        </div>
-    </section>
+    <div id="app-root"></div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
-    <script type="module">
-        import { db, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        
-        lucide.createIcons();
-        gsap.from(".hero-anim", { opacity: 0, y: 30, duration: 1, stagger: 0.2 });
-
-        onSnapshot(query(collection(db, 'nad_projects'), limit(3)), (snap) => {
-            const grid = document.getElementById('highlights-grid');
-            grid.innerHTML = snap.docs.map(doc => {
-                const p = doc.data();
-                return `
-                    <div class="bg-zinc-900/50 rounded-[2rem] overflow-hidden border border-zinc-900 group">
-                        <img src="${p.thumbnail}" class="w-full aspect-video object-cover opacity-60 group-hover:opacity-100 transition-opacity">
-                        <div class="p-8">
-                            <h3 class="text-white font-black text-xl uppercase">${p.title}</h3>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        });
-    </script>
+    <script type="module" src="index.js"></script>
 </body>
 </html>

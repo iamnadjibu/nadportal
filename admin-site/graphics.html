@@ -13,70 +13,14 @@
 
     <div class="flex">
         <div id="sidebar-target"></div>
-
-        <main class="flex-1 ml-80 p-16">
-            <div class="flex justify-between items-end mb-16">
-                <div>
-                    <h1 class="text-6xl font-black text-white font-outfit uppercase tracking-tighter">GRAPHIC NODE</h1>
-                    <p class="text-[10px] font-black tracking-widest text-zinc-700 uppercase">Aesthetic Asset Management</p>
-                </div>
-                <button id="add-btn" class="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-amber-500 transition-all">New Graphic</button>
-            </div>
-            
-            <div id="graphics-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Injected via JS -->
-            </div>
-        </main>
+        <div id="app-root" class="flex-1"></div>
     </div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
+    <script type="module" src="../shared/auth-check.js"></script>
     <script type="module">
-        import { db, auth, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, where, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import '../shared/auth-check.js';
-
-        const q = query(collection(db, 'nad_projects'), where('type', '==', 'GRAPHIC'));
-        onSnapshot(q, (snap) => {
-            const list = document.getElementById('graphics-list');
-            list.innerHTML = snap.docs.map(snapDoc => {
-                const p = snapDoc.data();
-                return `
-                    <div class="glass-panel p-6 rounded-[2.5rem] group">
-                        <div class="aspect-square rounded-2xl overflow-hidden bg-black mb-6 relative">
-                            <img src="${p.thumbnail}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700">
-                            <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button onclick="window.deleteNode('${snapDoc.id}')" class="p-3 bg-red-600 text-white rounded-xl shadow-xl">
-                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <h3 class="text-white font-black text-sm uppercase px-2">${p.title}</h3>
-                    </div>
-                `;
-            }).join('');
-            if (lucide) lucide.createIcons();
-        });
-
-        window.deleteNode = async (id) => {
-            if (confirm("Permanently erase this graphic node?")) {
-                await deleteDoc(doc(db, 'nad_projects', id));
-            }
-        };
-
-        document.getElementById('add-btn').onclick = () => {
-            const title = prompt("Graphic Title:");
-            const url = prompt("Thumbnail URL:");
-            if (title && url) {
-                addDoc(collection(db, 'nad_projects'), { 
-                    title, 
-                    type: 'GRAPHIC', 
-                    thumbnail: url, 
-                    timestamp: Date.now(), 
-                    views: 0, 
-                    clicks: 0 
-                });
-            }
-        };
+        import { initAdminContentPage } from './admin-renderer.js';
+        initAdminContentPage('GRAPHIC', 'GRAPHICS', 'Aesthetic Asset Management');
     </script>
 </body>
 </html>

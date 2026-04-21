@@ -11,37 +11,12 @@
 </head>
 <body class="bg-black text-zinc-300 antialiased overflow-x-hidden">
     <div id="navbar-target"></div>
-
-    <div class="pt-48 pb-20 px-8 max-w-7xl mx-auto">
-        <h1 class="text-8xl font-black text-white uppercase tracking-tighter mb-12 font-outfit">WEBSITES</h1>
-        <div id="websites-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-             <p class="text-zinc-800 uppercase font-black tracking-widest text-xs">Synchronizing Nodes...</p>
-        </div>
-    </div>
+    <div id="app-root"></div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
     <script type="module">
-        import { db, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        
-        lucide.createIcons();
-
-        const q = query(collection(db, 'nad_projects'), where('type', '==', 'WEBSITE'));
-        onSnapshot(q, (snap) => {
-            const grid = document.getElementById('websites-grid');
-            grid.innerHTML = snap.docs.map(doc => {
-                const p = doc.data();
-                return `
-                    <div class="glass-panel p-8 rounded-[3rem] text-center flex flex-col items-center group">
-                        <div class="website-logo-container mb-6 group-hover:scale-110 transition-all">
-                            <img src="${p.logo || p.thumbnail}" class="website-logo">
-                        </div>
-                        <h3 class="text-xl font-black text-white uppercase tracking-tighter mb-6">${p.title}</h3>
-                        <a href="${p.link}" target="_blank" class="w-full bg-zinc-900 border border-zinc-800 text-white py-3 rounded-2xl text-[10px] font-black uppercase hover:bg-amber-500">Visit Site</a>
-                    </div>
-                `;
-            }).join('');
-        });
+        import { initContentPage } from './content-renderer.js';
+        initContentPage('WEBSITE', 'WEBSITES', 'Infrastructure Node Control');
     </script>
 </body>
 </html>

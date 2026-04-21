@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "nadportfolio"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

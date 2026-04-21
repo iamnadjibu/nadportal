@@ -13,75 +13,14 @@
 
     <div class="flex">
         <div id="sidebar-target"></div>
-
-        <main class="flex-1 ml-80 p-16">
-            <div class="flex justify-between items-end mb-16">
-                <div>
-                    <h1 class="text-6xl font-black text-white font-outfit uppercase tracking-tighter">WEBSITE NODE</h1>
-                    <p class="text-[10px] font-black tracking-widest text-zinc-700 uppercase">Infrastructure Control</p>
-                </div>
-                <button id="add-btn" class="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-amber-500 transition-all">Deploy Site Node</button>
-            </div>
-            
-            <div id="websites-list" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Injected via JS -->
-            </div>
-        </main>
+        <div id="app-root" class="flex-1"></div>
     </div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
+    <script type="module" src="../shared/auth-check.js"></script>
     <script type="module">
-        import { db, auth, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, where, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import '../shared/auth-check.js';
-
-        const q = query(collection(db, 'nad_projects'), where('type', '==', 'WEBSITE'));
-        onSnapshot(q, (snap) => {
-            const list = document.getElementById('websites-list');
-            list.innerHTML = snap.docs.map(snapDoc => {
-                const p = snapDoc.data();
-                return `
-                    <div class="glass-panel p-8 rounded-[3rem] flex items-center justify-between group">
-                        <div class="flex items-center space-x-6">
-                            <div class="w-16 h-16 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center overflow-hidden">
-                                <img src="${p.logo || p.thumbnail}" class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <h3 class="text-white font-black text-sm uppercase">${p.title}</h3>
-                                <p class="text-zinc-700 text-[9px] font-bold uppercase truncate max-w-[150px]">${p.link}</p>
-                            </div>
-                        </div>
-                        <button onclick="window.deleteNode('${snapDoc.id}')" class="text-zinc-800 hover:text-red-500 transition-colors">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-                `;
-            }).join('');
-            if (lucide) lucide.createIcons();
-        });
-
-        window.deleteNode = async (id) => {
-            if (confirm("Decommission this website node?")) {
-                await deleteDoc(doc(db, 'nad_projects', id));
-            }
-        };
-
-        document.getElementById('add-btn').onclick = () => {
-            const title = prompt("Site Name:");
-            const link = prompt("Site URL:");
-            const logo = prompt("Logo/Icon URL:");
-            if (title && link) {
-                addDoc(collection(db, 'nad_projects'), { 
-                    title, 
-                    type: 'WEBSITE', 
-                    link, 
-                    logo: logo || 'https://via.placeholder.com/200',
-                    timestamp: Date.now(), 
-                    views: 0, 
-                    clicks: 0 
-                });
-            }
-        };
+        import { initAdminContentPage } from './admin-renderer.js';
+        initAdminContentPage('WEBSITE', 'WEBSITES', 'Infrastructure Node Control');
     </script>
 </body>
 </html>

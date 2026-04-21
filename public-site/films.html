@@ -11,40 +11,12 @@
 </head>
 <body class="bg-black text-zinc-300 antialiased overflow-x-hidden">
     <div id="navbar-target"></div>
-
-    <div class="pt-48 pb-20 px-8 max-w-7xl mx-auto">
-        <h1 class="text-8xl font-black text-white uppercase tracking-tighter mb-12 font-outfit">FILMS</h1>
-        <div id="films-grid" class="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <!-- Loading -->
-            <p class="text-zinc-800 uppercase font-black tracking-widest text-xs">Syncing Reels...</p>
-        </div>
-    </div>
+    <div id="app-root"></div>
 
     <script type="module" src="../shared/nav-injector.js"></script>
     <script type="module">
-        import { db, collection } from '../shared/firebase-config.js';
-        import { onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        
-        lucide.createIcons();
-
-        const q = query(collection(db, 'nad_projects'), where('type', 'in', ['FILM', 'AI FILM', 'SHORT FILM']));
-        onSnapshot(q, (snap) => {
-            const grid = document.getElementById('films-grid');
-            grid.innerHTML = snap.docs.map(doc => {
-                const p = doc.data();
-                return `
-                    <div class="group cursor-pointer">
-                        <div class="aspect-video bg-zinc-900 rounded-[2.5rem] overflow-hidden border border-zinc-900">
-                            <img src="${p.thumbnail}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700">
-                        </div>
-                        <div class="p-8">
-                            <p class="text-amber-500 text-[10px] font-black uppercase mb-1 tracking-widest">${p.type}</p>
-                            <h3 class="text-3xl font-black text-white uppercase tracking-tighter">${p.title}</h3>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        });
+        import { initContentPage } from './content-renderer.js';
+        initContentPage(['FILM', 'AI FILM', 'SHORT FILM'], 'FILMS', 'Narrative Production Nodes');
     </script>
 </body>
 </html>
