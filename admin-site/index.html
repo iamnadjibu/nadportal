@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | NAD STUDIO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Outfit:wght@900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../public-site/style.css">
+</head>
+<body class="bg-[#050505] text-zinc-500 overflow-hidden">
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-stardust">
+        <div class="w-full max-w-md p-10 glass-panel rounded-[3rem] shadow-2xl relative z-10">
+            <div class="text-center mb-10">
+                <h1 class="text-5xl font-black text-white font-outfit uppercase tracking-tighter mb-4">NAD <span class="text-amber-500">STUDIO</span></h1>
+                <p id="mode-text" class="text-[10px] font-black uppercase tracking-[0.3em]">Restricted Access Area</p>
+            </div>
+            
+            <form id="auth-form" class="space-y-6">
+                <input type="email" id="email" required class="w-full bg-black border border-zinc-900 rounded-2xl px-6 py-4 text-white outline-none focus:border-amber-500" placeholder="EMAIL">
+                <input type="password" id="pass" required class="w-full bg-black border border-zinc-900 rounded-2xl px-6 py-4 text-white outline-none focus:border-amber-500" placeholder="PASSWORD">
+                <button type="submit" id="submit-btn" class="w-full bg-white text-black font-black uppercase tracking-widest py-5 rounded-2xl hover:bg-amber-500 transition-all">Authorize</button>
+            </form>
+
+            <div class="mt-8 space-y-4">
+                <button id="google-btn" class="w-full bg-zinc-900 border border-zinc-800 text-white font-black py-4 rounded-2xl flex items-center justify-center space-x-3 text-[10px]">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-amber-500"></i>
+                    <span>GOOGLE AUTHORIZATION</span>
+                </button>
+                <div class="text-center">
+                    <button id="toggle-mode" class="text-[9px] font-black uppercase hover:text-white">Request Signup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth } from '../shared/firebase-config.js';
+        import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import '../shared/auth-check.js'; // This will redirect to dashboard if already logged in
+
+        lucide.createIcons();
+        let mode = 'LOGIN';
+
+        const form = document.getElementById('auth-form');
+        const toggle = document.getElementById('toggle-mode');
+        const google = document.getElementById('google-btn');
+
+        toggle.onclick = () => {
+            mode = mode === 'LOGIN' ? 'SIGNUP' : 'LOGIN';
+            document.getElementById('mode-text').textContent = mode === 'LOGIN' ? 'Restricted Access Area' : 'New Administrator Registration';
+            document.getElementById('submit-btn').textContent = mode === 'LOGIN' ? 'Authorize' : 'Register';
+            toggle.textContent = mode === 'LOGIN' ? 'Request Signup' : 'Return to Login';
+        };
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('pass').value;
+            try {
+                if (mode === 'LOGIN') await signInWithEmailAndPassword(auth, email, pass);
+                else await createUserWithEmailAndPassword(auth, email, pass);
+            } catch (err) { alert(err.message); }
+        };
+
+        google.onclick = async () => {
+            try { await signInWithPopup(auth, new GoogleAuthProvider()); }
+            catch (err) { alert(err.message); }
+        };
+    </script>
+</body>
+</html>

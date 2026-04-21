@@ -1,0 +1,73 @@
+/* Base */
+:root { --amber-500: #f59e0b; }
+body { scroll-behavior: smooth; }
+
+/* Custom Textures */
+.bg-stardust { background-image: url('https://www.transparenttextures.com/patterns/stardust.png'); }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: #18181b; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--amber-500); }
+
+/* Navigation */
+nav.scrolled {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Animations */
+.hero-title { opacity: 0; transform: translateY(50px); }
+.hero-p { opacity: 0; transform: translateY(30px); }
+.hero-btn { opacity: 0; transform: scale(0.9); }
+
+/* Project Cards */
+.website-card {
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.website-card:hover {
+    transform: translateY(-8px);
+}
+.website-logo-container {
+    width: 120px;
+    height: 120px;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--amber-500), #000);
+    border-radius: 50%;
+}
+.website-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #000;
+}
+
+/* Glass Panels */
+.glass-panel {
+    background: rgba(15, 15, 18, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* Views */
+.view-enter { opacity: 0; transform: translateY(10px); }
+.view-enter-active { opacity: 1; transform: translateY(0); transition: all 0.6s ease-out; }
+
+/* Comment Section */
+.comment-box {
+    background: rgba(9, 9, 11, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.comment-input {
+    background: #000;
+    border: 1px solid #18181b;
+}
+.comment-input:focus {
+    border-color: var(--amber-500);
+    outline: none;
+}

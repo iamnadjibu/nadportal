@@ -1,0 +1,57 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/public-site/index.html"
+      },
+      {
+        "source": "/films",
+        "destination": "/public-site/films.html"
+      },
+      {
+        "source": "/websites",
+        "destination": "/public-site/websites.html"
+      },
+      {
+        "source": "/graphics",
+        "destination": "/public-site/graphics.html"
+      },
+      {
+        "source": "/about",
+        "destination": "/public-site/about.html"
+      },
+      {
+        "source": "/contact",
+        "destination": "/public-site/contact.html"
+      },
+      {
+        "source": "/admin",
+        "destination": "/admin-site/index.html"
+      },
+      {
+        "source": "/admin/dashboard",
+        "destination": "/admin-site/dashboard.html"
+      },
+      {
+        "source": "/admin/films",
+        "destination": "/admin-site/films.html"
+      },
+      {
+        "source": "/admin/graphics",
+        "destination": "/admin-site/graphics.html"
+      },
+      {
+        "source": "/admin/websites",
+        "destination": "/admin-site/websites.html"
+      }
+    ]
+  }
+}
