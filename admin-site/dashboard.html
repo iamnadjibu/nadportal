@@ -13,30 +13,7 @@
 <body class="bg-[#020202] text-zinc-500 overflow-x-hidden">
 
     <div class="flex">
-        <!-- Sidebar -->
-        <aside class="w-80 h-screen fixed bg-black border-r border-zinc-900 p-8 flex flex-col">
-            <h2 class="text-2xl font-black text-white font-outfit uppercase mb-12">NAD <span class="text-amber-500">STUDIO</span></h2>
-            <nav class="flex-1 space-y-2">
-                <a href="dashboard.html" class="flex items-center space-x-3 px-6 py-4 rounded-2xl bg-amber-500/10 text-amber-500 text-xs font-black uppercase tracking-widest">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> <span>Dashboard</span>
-                </a>
-                <a href="films.html" class="flex items-center space-x-3 px-6 py-4 rounded-2xl text-zinc-600 hover:bg-zinc-900 text-xs font-black uppercase tracking-widest transition-all">
-                    <i data-lucide="film" class="w-4 h-4"></i> <span>Films</span>
-                </a>
-                <a href="websites.html" class="flex items-center space-x-3 px-6 py-4 rounded-2xl text-zinc-600 hover:bg-zinc-900 text-xs font-black uppercase tracking-widest transition-all">
-                    <i data-lucide="globe" class="w-4 h-4"></i> <span>Websites</span>
-                </a>
-                <a href="graphics.html" class="flex items-center space-x-3 px-6 py-4 rounded-2xl text-zinc-600 hover:bg-zinc-900 text-xs font-black uppercase tracking-widest transition-all">
-                    <i data-lucide="pen-tool" class="w-4 h-4"></i> <span>Graphics</span>
-                </a>
-                <a href="reviews.html" class="flex items-center space-x-3 px-6 py-4 rounded-2xl text-zinc-600 hover:bg-zinc-900 text-xs font-black uppercase tracking-widest transition-all">
-                    <i data-lucide="message-square" class="w-4 h-4"></i> <span>Reviews</span>
-                </a>
-            </nav>
-            <button id="logout" class="mt-auto flex items-center space-x-3 px-6 py-4 text-xs font-black uppercase tracking-widest text-zinc-700 hover:text-red-500 transition-all">
-                <i data-lucide="log-out" class="w-4 h-4"></i> <span>Logout</span>
-            </button>
-        </aside>
+        <div id="sidebar-target"></div>
 
         <!-- Content -->
         <main class="flex-1 ml-80 p-16">
@@ -57,7 +34,7 @@
     <script type="module">
         import { db, auth } from '../shared/firebase-config.js';
         import { onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-        import { signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+        import '../shared/nav-injector.js';
         import '../shared/auth-check.js';
 
         lucide.createIcons();

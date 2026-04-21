@@ -51,6 +51,10 @@
       {
         "source": "/admin/websites",
         "destination": "/admin-site/websites.html"
+      },
+      {
+        "source": "/admin/reviews",
+        "destination": "/admin-site/reviews.html"
       }
     ]
   }

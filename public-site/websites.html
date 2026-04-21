@@ -10,20 +10,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-black text-zinc-300 antialiased overflow-x-hidden">
-    <nav id="navbar" class="fixed w-full z-[100] py-8 bg-black/80 backdrop-blur-md border-b border-zinc-900">
-        <div class="max-w-7xl mx-auto px-8 flex justify-between items-center">
-            <a href="index.html" class="text-3xl font-black text-white font-outfit">IAM <span class="text-amber-500">NAD</span></a>
-            <div class="hidden lg:flex items-center space-x-8 text-[10px] uppercase tracking-[0.3em] font-black">
-                <a href="index.html" class="text-zinc-500 hover:text-white">Home</a>
-                <a href="films.html" class="text-zinc-500 hover:text-white">Films</a>
-                <a href="graphics.html" class="text-zinc-500 hover:text-white">Graphics</a>
-                <a href="websites.html" class="text-white border-b border-amber-500">Websites</a>
-                <a href="about.html" class="text-zinc-500 hover:text-white">About NAD</a>
-                <a href="contact.html" class="text-zinc-500 hover:text-white">Contact Us</a>
-            </div>
-            <button class="lg:hidden text-white"><i data-lucide="menu"></i></button>
-        </div>
-    </nav>
+    <div id="navbar-target"></div>
 
     <div class="pt-48 pb-20 px-8 max-w-7xl mx-auto">
         <h1 class="text-8xl font-black text-white uppercase tracking-tighter mb-12 font-outfit">WEBSITES</h1>
@@ -32,6 +19,7 @@
         </div>
     </div>
 
+    <script type="module" src="../shared/nav-injector.js"></script>
     <script type="module">
         import { db, collection } from '../shared/firebase-config.js';
         import { onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
