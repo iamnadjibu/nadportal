@@ -10,7 +10,8 @@ const defaultAboutData = {
     domains: [
         { label: "Primary Domain", value: "Film & Production" },
         { label: "Secondary Node", value: "Creative Engineering" }
-    ]
+    ],
+    certificates: []
 };
 
 export default function About() {
@@ -50,6 +51,25 @@ export default function About() {
                             </div>
                         ))}
                     </div>
+
+                    {aboutData.certificates?.length > 0 && (
+                        <div className="pt-8 border-t border-zinc-800/50">
+                            <h3 className="text-[10px] font-black uppercase text-amber-500 tracking-widest mb-6">Certificates & Diplomas</h3>
+                            <div className="space-y-6">
+                                {aboutData.certificates.map((cert, idx) => (
+                                    <div key={idx} className="flex justify-between items-center group">
+                                        <div>
+                                            <p className="text-white font-bold uppercase tracking-tighter text-lg group-hover:text-amber-500 transition-colors">{cert.title}</p>
+                                            <p className="text-zinc-500 text-xs font-bold uppercase tracking-widest">{cert.issuer}</p>
+                                        </div>
+                                        <div className="text-zinc-700 font-black text-xl tabular-nums">
+                                            {cert.year}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

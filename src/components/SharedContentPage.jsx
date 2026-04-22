@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import { collection, query, where, onSnapshot, doc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import PreviewModal from './PreviewModal';
+import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isWebsite }) {
     const [projects, setProjects] = useState([]);
@@ -25,6 +26,33 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
 
         return () => unsubscribe();
     }, [typeFilter]);
+
+    const handleWebsiteClick = async (e, id, link) => {
+        e.preventDefault();
+        try {
+            await updateDoc(doc(db, 'nad_projects', id), {
+                clicks: increment(1)
+            });
+        } catch (error) {
+            console.error("Error tracking click", error);
+        }
+        window.open(link, '_blank');
+    };
+
+    const handleVote = async (e, id, type) => {
+        e.stopPropagation();
+        const votedKey = `voted_${id}`;
+        if (localStorage.getItem(votedKey)) return;
+        
+        try {
+            await updateDoc(doc(db, 'nad_projects', id), {
+                [type]: increment(1)
+            });
+            localStorage.setItem(votedKey, 'true');
+        } catch (error) {
+            console.error("Error recording vote", error);
+        }
+    };
 
     return (
         <div className="pt-48 pb-20 px-8 max-w-7xl mx-auto">
@@ -51,7 +79,7 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
                                 <img src={p.logo || p.thumbnail} alt={p.title} className="w-full h-full object-cover" />
                             </div>
                             <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-8 group-hover:text-amber-50 transition-colors">{p.title}</h3>
-                            <a href={p.link} target="_blank" rel="noreferrer" className="w-full relative group/btn">
+                            <a href={p.link} onClick={(e) => handleWebsiteClick(e, p.id, p.link)} className="w-full relative group/btn">
                                 <div className="absolute inset-0 bg-amber-500 rounded-2xl blur-md opacity-0 group-hover/btn:opacity-50 transition-opacity duration-300"></div>
                                 <div className="relative bg-white text-black py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all shadow-xl block border border-transparent hover:border-amber-400">
                                     Open Node
@@ -77,6 +105,17 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
                             <div className="p-8 relative">
                                 <p className="text-amber-500 text-[10px] font-black uppercase mb-1 tracking-widest group-hover:animate-pulse-glow">{p.type}</p>
                                 <h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-amber-50 transition-colors">{p.title}</h3>
+                                
+                                {p.type === 'GRAPHIC' && (
+                                    <div className="flex space-x-6 mt-6 relative z-20" onClick={e => e.stopPropagation()}>
+                                        <button onClick={(e) => handleVote(e, p.id, 'likes')} className="flex items-center space-x-2 text-zinc-500 hover:text-emerald-500 transition-colors group/vote">
+                                            <ThumbsUp size={18} className="group-hover/vote:-translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.likes || 0}</span>
+                                        </button>
+                                        <button onClick={(e) => handleVote(e, p.id, 'dislikes')} className="flex items-center space-x-2 text-zinc-500 hover:text-red-500 transition-colors group/vote">
+                                            <ThumbsDown size={18} className="group-hover/vote:translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.dislikes || 0}</span>
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </button>
                     ))}

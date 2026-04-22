@@ -12,7 +12,7 @@ service cloud.firestore {
       allow write: if request.auth != null;
       
       // Allow incrementing stats (publicly allowed for telemetry)
-      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views', 'clicks']);
+      allow update: if request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views', 'clicks', 'likes', 'dislikes']);
     }
     
     // Comments Collection

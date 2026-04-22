@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PreviewModal from '../../components/PreviewModal';
-import { collection, query, limit, where, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, query, limit, where, orderBy, onSnapshot, doc, updateDoc, increment } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import GLSLHills from '../../components/ui/glsl-hills';
 
@@ -43,6 +43,18 @@ export default function Home() {
         };
     }, []);
 
+    const handleWebsiteClick = async (e, id, link) => {
+        e.preventDefault();
+        try {
+            await updateDoc(doc(db, 'nad_projects', id), {
+                clicks: increment(1)
+            });
+        } catch (error) {
+            console.error("Error tracking click", error);
+        }
+        window.open(link, '_blank');
+    };
+
     const renderGrid = (items, isWebsiteRoute) => (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {items.map((p, index) => {
@@ -51,8 +63,7 @@ export default function Home() {
                 return isWebsite ? (
                     <a 
                         href={p.link}
-                        target="_blank"
-                        rel="noreferrer"
+                        onClick={(e) => handleWebsiteClick(e, p.id, p.link)}
                         key={p.id} 
                         className="group cursor-pointer bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] block relative"
                         style={{ animation: `fadeInUp 0.8s ease-out forwards`, animationDelay: `${index * 0.2}s`, opacity: 0 }}

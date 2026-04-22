@@ -1,5 +1,7 @@
 import { X, ExternalLink, Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { doc, increment, updateDoc } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 
 function formatLinkForEmbed(url) {
     if (!url) return '';
@@ -11,19 +13,41 @@ function formatLinkForEmbed(url) {
 
 export default function PreviewModal({ isOpen, onClose, project }) {
     const [isLoading, setIsLoading] = useState(true);
+    const viewTimerRef = useRef(null);
 
     useEffect(() => {
-        if (isOpen) {
+        if (isOpen && project) {
             document.body.style.overflow = 'hidden';
             setIsLoading(true);
+
+            // Start 10-second view tracking if it's a FILM
+            if (['FILM', 'AI FILM', 'SHORT FILM'].includes(project.type)) {
+                viewTimerRef.current = setTimeout(async () => {
+                    try {
+                        const projectRef = doc(db, 'nad_projects', project.id);
+                        await updateDoc(projectRef, {
+                            views: increment(1)
+                        });
+                    } catch (error) {
+                        console.error("Error recording view:", error);
+                    }
+                }, 10000); // 10 seconds
+            }
         } else {
             document.body.style.overflow = 'auto';
             setTimeout(() => setIsLoading(true), 300); // reset after transition
+            
+            if (viewTimerRef.current) {
+                clearTimeout(viewTimerRef.current);
+            }
         }
         return () => {
             document.body.style.overflow = 'auto';
+            if (viewTimerRef.current) {
+                clearTimeout(viewTimerRef.current);
+            }
         };
-    }, [isOpen]);
+    }, [isOpen, project]);
 
     if (!project && !isOpen) return null;
 

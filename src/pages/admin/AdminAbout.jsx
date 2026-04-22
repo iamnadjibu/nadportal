@@ -10,7 +10,8 @@ const defaultAboutData = {
     domains: [
         { label: "Primary Domain", value: "Film & Production" },
         { label: "Secondary Node", value: "Creative Engineering" }
-    ]
+    ],
+    certificates: []
 };
 
 export default function AdminAbout() {
@@ -53,6 +54,20 @@ export default function AdminAbout() {
         setAboutData({
             ...aboutData,
             domains: aboutData.domains.filter((_, idx) => idx !== indexToRemove)
+        });
+    };
+
+    const addCertificate = () => {
+        setAboutData({
+            ...aboutData,
+            certificates: [...(aboutData.certificates || []), { title: "New Certificate", issuer: "Issuer Name", year: "2024" }]
+        });
+    };
+
+    const removeCertificate = (indexToRemove) => {
+        setAboutData({
+            ...aboutData,
+            certificates: (aboutData.certificates || []).filter((_, idx) => idx !== indexToRemove)
         });
     };
 
@@ -179,6 +194,83 @@ export default function AdminAbout() {
                             ))}
                             {aboutData.domains.length === 0 && (
                                 <p className="text-zinc-600 text-xs text-center italic py-4">No domains added. Click "Add Domain" to create one.</p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Certificates & Diplomas */}
+                    <div className="glass-panel p-8 rounded-[2.5rem]">
+                        <div className="flex justify-between items-center mb-6 border-b border-zinc-800 pb-2">
+                            <h3 className="text-white font-black uppercase text-sm">Certificates & Diplomas</h3>
+                            <button 
+                                onClick={addCertificate}
+                                className="text-amber-500 hover:text-white flex items-center space-x-1 text-[10px] uppercase font-bold tracking-widest transition-colors"
+                            >
+                                <Plus size={14} />
+                                <span>Add Certificate</span>
+                            </button>
+                        </div>
+
+                        <div className="space-y-6">
+                            {(aboutData.certificates || []).map((cert, idx) => (
+                                <div key={idx} className="flex space-x-4 items-center bg-zinc-900/30 p-4 rounded-2xl border border-zinc-800/50">
+                                    <div className="flex-1 space-y-4">
+                                        <div>
+                                            <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 mb-1 block">Title</label>
+                                            <input
+                                                type="text"
+                                                value={cert.title}
+                                                placeholder="e.g. Graphic Design Diploma"
+                                                onChange={(e) => {
+                                                    const newCerts = [...(aboutData.certificates || [])];
+                                                    newCerts[idx].title = e.target.value;
+                                                    setAboutData({...aboutData, certificates: newCerts});
+                                                }}
+                                                className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-2 text-white focus:outline-none focus:border-amber-500 text-xs transition-colors"
+                                            />
+                                        </div>
+                                        <div className="flex space-x-4">
+                                            <div className="flex-1">
+                                                <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 mb-1 block">Issuer</label>
+                                                <input
+                                                    type="text"
+                                                    value={cert.issuer}
+                                                    placeholder="e.g. University Name"
+                                                    onChange={(e) => {
+                                                        const newCerts = [...(aboutData.certificates || [])];
+                                                        newCerts[idx].issuer = e.target.value;
+                                                        setAboutData({...aboutData, certificates: newCerts});
+                                                    }}
+                                                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-2 text-zinc-400 focus:outline-none focus:border-amber-500 text-xs transition-colors"
+                                                />
+                                            </div>
+                                            <div className="w-24">
+                                                <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 mb-1 block">Year</label>
+                                                <input
+                                                    type="text"
+                                                    value={cert.year}
+                                                    placeholder="e.g. 2024"
+                                                    onChange={(e) => {
+                                                        const newCerts = [...(aboutData.certificates || [])];
+                                                        newCerts[idx].year = e.target.value;
+                                                        setAboutData({...aboutData, certificates: newCerts});
+                                                    }}
+                                                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-2 text-zinc-400 focus:outline-none focus:border-amber-500 text-xs transition-colors"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button 
+                                        onClick={() => removeCertificate(idx)}
+                                        className="w-10 h-10 flex-shrink-0 bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-xl flex items-center justify-center transition-colors"
+                                        title="Remove Certificate"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
+                                </div>
+                            ))}
+                            {(aboutData.certificates || []).length === 0 && (
+                                <p className="text-zinc-600 text-xs text-center italic py-4">No certificates added. Click "Add Certificate" to create one.</p>
                             )}
                         </div>
                     </div>
