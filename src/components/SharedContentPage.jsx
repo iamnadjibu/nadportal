@@ -17,7 +17,8 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
         }
 
         const unsubscribe = onSnapshot(q, (snap) => {
-            const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden);
+            let data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden);
+            data.sort((a, b) => b.timestamp - a.timestamp);
             setProjects(data);
             setLoading(false);
         });

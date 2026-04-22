@@ -13,16 +13,28 @@ export default function Home() {
 
     useEffect(() => {
         // Fetch Recent Films
-        const qFilms = query(collection(db, 'nad_projects'), where('type', 'in', ['FILM', 'AI FILM', 'SHORT FILM']), orderBy('timestamp', 'desc'), limit(3));
-        const unsubFilms = onSnapshot(qFilms, snap => setFilms(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden)));
+        const qFilms = query(collection(db, 'nad_projects'), where('type', 'in', ['FILM', 'AI FILM', 'SHORT FILM']));
+        const unsubFilms = onSnapshot(qFilms, snap => {
+            let data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden);
+            data.sort((a, b) => b.timestamp - a.timestamp);
+            setFilms(data.slice(0, 3));
+        });
 
         // Fetch Recent Graphics
-        const qGraphics = query(collection(db, 'nad_projects'), where('type', '==', 'GRAPHIC'), orderBy('timestamp', 'desc'), limit(3));
-        const unsubGraphics = onSnapshot(qGraphics, snap => setGraphics(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden)));
+        const qGraphics = query(collection(db, 'nad_projects'), where('type', '==', 'GRAPHIC'));
+        const unsubGraphics = onSnapshot(qGraphics, snap => {
+            let data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden);
+            data.sort((a, b) => b.timestamp - a.timestamp);
+            setGraphics(data.slice(0, 3));
+        });
 
         // Fetch Recent Websites
-        const qWebsites = query(collection(db, 'nad_projects'), where('type', '==', 'WEBSITE'), orderBy('timestamp', 'desc'), limit(3));
-        const unsubWebsites = onSnapshot(qWebsites, snap => setWebsites(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden)));
+        const qWebsites = query(collection(db, 'nad_projects'), where('type', '==', 'WEBSITE'));
+        const unsubWebsites = onSnapshot(qWebsites, snap => {
+            let data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).filter(p => !p.hidden);
+            data.sort((a, b) => b.timestamp - a.timestamp);
+            setWebsites(data.slice(0, 3));
+        });
 
         return () => {
             unsubFilms();
