@@ -1,7 +1,7 @@
 import { X, ExternalLink, Loader2 } from 'lucide-react';
 import { useEffect, useState, useRef } from 'react';
 import { doc, increment, updateDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
+import { db } from '../config/firebase';
 
 function formatLinkForEmbed(url) {
     if (!url) return '';
