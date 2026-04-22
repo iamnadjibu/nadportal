@@ -85,7 +85,7 @@ export default function Home() {
             {/* GLSL Hills Hero Section */}
             <section className="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-black">
                 <GLSLHills />
-                <div className="space-y-8 pointer-events-none z-10 text-center absolute px-4 max-w-5xl">
+                <div className="space-y-8 pointer-events-none z-10 text-center absolute px-4 max-w-5xl mt-24">
                     <h1 className="font-black text-white uppercase tracking-tighter text-6xl md:text-8xl drop-shadow-2xl font-outfit leading-tight">
                         <span className="italic text-5xl md:text-7xl font-thin text-amber-500 block mb-4">Designs That Speak</span>
                         Louder Than Words

@@ -21,6 +21,7 @@ import AdminGraphics from './pages/admin/AdminGraphics';
 import AdminWebsites from './pages/admin/AdminWebsites';
 import AdminBookings from './pages/admin/AdminBookings';
 import AdminFooterSettings from './pages/admin/AdminFooterSettings';
+import AdminAbout from './pages/admin/AdminAbout';
 import Comments from './pages/admin/Comments';
 
 function PublicLayout() {
@@ -63,6 +64,7 @@ export default function App() {
                     <Route path="websites" element={<AdminWebsites />} />
                     <Route path="bookings" element={<AdminBookings />} />
                     <Route path="comments" element={<Comments />} />
+                    <Route path="about" element={<AdminAbout />} />
                     <Route path="settings" element={<AdminFooterSettings />} />
                 </Route>
             </Routes>

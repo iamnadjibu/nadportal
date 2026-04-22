@@ -9,6 +9,7 @@ const adminNavItems = [
     { name: 'WEBSITES', path: '/admin/websites', icon: Globe },
     { name: 'THE BOOKINGS', path: '/admin/bookings', icon: MessageSquare },
     { name: 'REVIEWS', path: '/admin/comments', icon: MessageSquare },
+    { name: 'ABOUT', path: '/admin/about', icon: User },
     { name: 'SETTINGS', path: '/admin/settings', icon: User }
 ];
 

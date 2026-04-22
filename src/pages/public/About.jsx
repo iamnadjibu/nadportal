@@ -1,28 +1,54 @@
+import { useEffect, useState } from 'react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../config/firebase';
+import { Loader2 } from 'lucide-react';
+
+const defaultAboutData = {
+    name: "Nadjibullah Uwabato",
+    description: "A visionary director and creative engineer dedicated to the intersection of cinematic storytelling and digital innovation. \nWith a focus on AI-driven narrative and high-performance web architecture, NAD PORTAL serves as the central node for \nexperimental and professional visual productions.",
+    imageUrl: "https://via.placeholder.com/800x800",
+    domains: [
+        { label: "Primary Domain", value: "Film & Production" },
+        { label: "Secondary Node", value: "Creative Engineering" }
+    ]
+};
+
 export default function About() {
+    const [aboutData, setAboutData] = useState(defaultAboutData);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(doc(db, 'nad_settings', 'about'), (docSnap) => {
+            if (docSnap.exists()) {
+                setAboutData(docSnap.data());
+            }
+            setLoading(false);
+        });
+        return () => unsubscribe();
+    }, []);
+
+    if (loading) return <div className="pt-48 pb-20 px-8 text-center"><Loader2 className="animate-spin text-amber-500 mx-auto" size={48} /></div>;
+
     return (
-        <div className="pt-48 pb-20 px-8 max-w-7xl mx-auto">
-            <h1 className="text-8xl font-black text-white uppercase tracking-tighter mb-16 font-outfit">ABOUT NAD</h1>
+        <div className="pt-48 pb-20 px-8 max-w-7xl mx-auto min-h-[80vh]">
+            <h1 className="text-8xl md:text-9xl font-black text-white uppercase tracking-tighter mb-16 font-outfit">ABOUT NAD</h1>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                 <div className="aspect-square bg-zinc-900 rounded-[4rem] overflow-hidden border border-zinc-800">
-                    <img src="https://via.placeholder.com/800x800" alt="Nadjibullah Uwabato" className="w-full h-full object-cover grayscale opacity-80" />
+                    <img src={aboutData.imageUrl} alt={aboutData.name} className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700 opacity-80 hover:opacity-100" />
                 </div>
                 <div className="space-y-8">
-                    <h2 className="text-3xl font-black text-amber-500 uppercase tracking-widest">Nadjibullah Uwabato</h2>
-                    <p className="text-xl text-zinc-400 leading-relaxed font-light">
-                        A visionary director and creative engineer dedicated to the intersection of cinematic storytelling and digital innovation. 
-                        With a focus on AI-driven narrative and high-performance web architecture, NAD PORTAL serves as the central node for 
-                        experimental and professional visual productions.
+                    <h2 className="text-4xl font-black text-amber-500 uppercase tracking-widest">{aboutData.name}</h2>
+                    <p className="text-xl text-zinc-400 leading-relaxed font-light whitespace-pre-wrap">
+                        {aboutData.description}
                     </p>
                     <div className="grid grid-cols-2 gap-8 pt-8">
-                        <div>
-                            <p className="text-[10px] font-black uppercase text-zinc-700 tracking-widest mb-2">Primary Domain</p>
-                            <p className="text-white font-bold uppercase tracking-tighter">Film & Production</p>
-                        </div>
-                        <div>
-                            <p className="text-[10px] font-black uppercase text-zinc-700 tracking-widest mb-2">Secondary Node</p>
-                            <p className="text-white font-bold uppercase tracking-tighter">Creative Engineering</p>
-                        </div>
+                        {aboutData.domains?.map((domain, idx) => (
+                            <div key={idx}>
+                                <p className="text-[10px] font-black uppercase text-zinc-700 tracking-widest mb-2">{domain.label}</p>
+                                <p className="text-white font-bold uppercase tracking-tighter text-lg">{domain.value}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
