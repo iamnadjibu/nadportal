@@ -130,11 +130,19 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
                                 <h3 className="text-white font-black text-lg uppercase">{p.title}</h3>
                                 <p className="text-zinc-500 text-[9px] font-bold uppercase truncate max-w-full mt-2">{p.link}</p>
                             </div>
+                        ) : typeFilter === 'GRAPHIC' ? (
+                            <>
+                                <div className="aspect-video rounded-2xl overflow-hidden bg-black mb-6 relative">
+                                    <div className="w-full h-full flex items-center justify-center pointer-events-none scale-50 md:scale-75 origin-center" dangerouslySetInnerHTML={{ __html: p.link }} />
+                                    {p.hidden && <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10"><p className="text-xs font-bold text-red-500 uppercase tracking-widest bg-black/80 px-4 py-2 rounded-full">HIDDEN</p></div>}
+                                </div>
+                                <h3 className="text-white font-black text-sm uppercase px-2">{p.title}</h3>
+                            </>
                         ) : (
                             <>
                                 <div className="aspect-video rounded-2xl overflow-hidden bg-black mb-6 relative">
                                     <img src={p.thumbnail} alt={p.title} className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700" />
-                                    {p.hidden && <div className="absolute inset-0 bg-black/50 flex items-center justify-center"><p className="text-xs font-bold text-red-500 uppercase tracking-widest bg-black/80 px-4 py-2 rounded-full">HIDDEN</p></div>}
+                                    {p.hidden && <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10"><p className="text-xs font-bold text-red-500 uppercase tracking-widest bg-black/80 px-4 py-2 rounded-full">HIDDEN</p></div>}
                                 </div>
                                 <h3 className="text-white font-black text-sm uppercase px-2">{p.title}</h3>
                             </>
@@ -159,15 +167,24 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
                                 <input required type="text" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" />
                             </div>
                             
-                            <div>
-                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Source Link / Video ID</label>
-                                <input required type="text" value={formData.link} onChange={e => setFormData({...formData, link: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" />
-                            </div>
+                            {typeFilter === 'GRAPHIC' ? (
+                                <div>
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Embed Code</label>
+                                    <textarea required value={formData.link} onChange={e => setFormData({...formData, link: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500 h-32 font-mono text-xs" placeholder="<iframe src='...' ></iframe>" />
+                                </div>
+                            ) : (
+                                <>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Source Link / Video ID</label>
+                                        <input required type="text" value={formData.link} onChange={e => setFormData({...formData, link: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" />
+                                    </div>
 
-                            <div>
-                                <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Thumbnail Image URL</label>
-                                <input type="url" value={formData.thumbnail} onChange={e => setFormData({...formData, thumbnail: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" />
-                            </div>
+                                    <div>
+                                        <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Thumbnail Image URL</label>
+                                        <input type="url" value={formData.thumbnail} onChange={e => setFormData({...formData, thumbnail: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" />
+                                    </div>
+                                </>
+                            )}
 
                             {isWebsite && (
                                 <div>

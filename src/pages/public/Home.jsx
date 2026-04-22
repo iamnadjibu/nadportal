@@ -77,6 +77,20 @@ export default function Home() {
                             <h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-amber-50 transition-colors">{p.title}</h3>
                         </div>
                     </a>
+                ) : p.type === 'GRAPHIC' ? (
+                    <div 
+                        key={p.id} 
+                        className="group bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] block text-left relative w-full flex flex-col"
+                        style={{ animation: `fadeInUp 0.8s ease-out forwards`, animationDelay: `${index * 0.2}s`, opacity: 0 }}
+                    >
+                        <div className="aspect-video relative overflow-hidden bg-black/50 flex justify-center items-center">
+                            <div className="w-full h-full flex items-center justify-center [&>iframe]:w-full [&>iframe]:h-full" dangerouslySetInnerHTML={{ __html: p.link }} />
+                        </div>
+                        <div className="p-8 relative mt-auto">
+                            <p className="text-amber-500 text-[10px] font-black uppercase mb-1 tracking-widest group-hover:animate-pulse-glow">{p.type}</p>
+                            <h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-amber-50 transition-colors">{p.title}</h3>
+                        </div>
+                    </div>
                 ) : (
                     <button 
                         onClick={() => setPreviewProject(p)}

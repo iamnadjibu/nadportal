@@ -86,39 +86,31 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
                                 </div>
                             </a>
                         </div>
-                    ) : (
-                        <button 
-                            onClick={() => setPreviewProject(p)}
+                    ) : p.type === 'GRAPHIC' ? (
+                        <div 
                             key={p.id} 
-                            className="group cursor-pointer bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] text-left relative w-full"
+                            className="group bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] flex flex-col relative w-full"
                             style={{ animation: `fadeInUp 0.8s ease-out forwards`, animationDelay: `${index * 0.15}s`, opacity: 0 }}
                         >
-                            <div className="aspect-video relative overflow-hidden">
-                                <img src={p.thumbnail} alt={p.title} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-500"></div>
-                                <div className="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                                    <div className="w-16 h-16 bg-amber-500/90 rounded-full flex items-center justify-center scale-75 group-hover:scale-100 shadow-[0_0_30px_rgba(245,158,11,0.5)] transition-all duration-500">
-                                        <div className="w-0 h-0 border-t-[8px] border-t-transparent border-l-[14px] border-l-black border-b-[8px] border-b-transparent ml-1"></div>
-                                    </div>
-                                </div>
+                            <div className="w-full aspect-video flex justify-center items-center bg-black/50 overflow-hidden relative">
+                                <div className="w-full h-full flex items-center justify-center [&>iframe]:w-full [&>iframe]:h-full" dangerouslySetInnerHTML={{ __html: p.link }} />
                             </div>
-                            <div className="p-8 relative">
+                            
+                            <div className="p-8 relative mt-auto">
                                 <p className="text-amber-500 text-[10px] font-black uppercase mb-1 tracking-widest group-hover:animate-pulse-glow">{p.type}</p>
                                 <h3 className="text-2xl font-black text-white uppercase tracking-tighter group-hover:text-amber-50 transition-colors">{p.title}</h3>
                                 
-                                {p.type === 'GRAPHIC' && (
-                                    <div className="flex space-x-6 mt-6 relative z-20" onClick={e => e.stopPropagation()}>
-                                        <button onClick={(e) => handleVote(e, p.id, 'likes')} className="flex items-center space-x-2 text-zinc-500 hover:text-emerald-500 transition-colors group/vote">
-                                            <ThumbsUp size={18} className="group-hover/vote:-translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.likes || 0}</span>
-                                        </button>
-                                        <button onClick={(e) => handleVote(e, p.id, 'dislikes')} className="flex items-center space-x-2 text-zinc-500 hover:text-red-500 transition-colors group/vote">
-                                            <ThumbsDown size={18} className="group-hover/vote:translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.dislikes || 0}</span>
-                                        </button>
-                                    </div>
-                                )}
+                                <div className="flex space-x-6 mt-6 relative z-20">
+                                    <button onClick={(e) => handleVote(e, p.id, 'likes')} className="flex items-center space-x-2 text-zinc-500 hover:text-emerald-500 transition-colors group/vote">
+                                        <ThumbsUp size={18} className="group-hover/vote:-translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.likes || 0}</span>
+                                    </button>
+                                    <button onClick={(e) => handleVote(e, p.id, 'dislikes')} className="flex items-center space-x-2 text-zinc-500 hover:text-red-500 transition-colors group/vote">
+                                        <ThumbsDown size={18} className="group-hover/vote:translate-y-1 transition-transform" /> <span className="text-sm font-bold">{p.dislikes || 0}</span>
+                                    </button>
+                                </div>
                             </div>
-                        </button>
-                    ))}
+                        </div>
+                    ) : (
                 </div>
             )}
 
