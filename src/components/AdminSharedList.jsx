@@ -12,6 +12,7 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
         link: '',
         thumbnail: '',
         logo: '',
+        sourceLink: '',
         hidden: false
     });
 
@@ -40,6 +41,7 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
                 link: node.link || '',
                 thumbnail: node.thumbnail || '',
                 logo: node.logo || '',
+                sourceLink: node.sourceLink || '',
                 hidden: node.hidden || false
             });
         } else {
@@ -49,6 +51,7 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
                 link: '',
                 thumbnail: '',
                 logo: '',
+                sourceLink: '',
                 hidden: false
             });
         }
@@ -60,6 +63,7 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
         const payload = {
             title: formData.title,
             thumbnail: formData.thumbnail || 'https://via.placeholder.com/800x450',
+            sourceLink: formData.sourceLink || '',
             hidden: formData.hidden
         };
 
@@ -170,7 +174,10 @@ export default function AdminSharedList({ typeFilter, pageTitle, subtitle, isWeb
                             {typeFilter === 'GRAPHIC' ? (
                                 <div>
                                     <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4">Embed Code</label>
-                                    <textarea required value={formData.link} onChange={e => setFormData({...formData, link: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500 h-32 font-mono text-xs" placeholder="<iframe src='...' ></iframe>" />
+                                    <textarea required value={formData.link} onChange={e => setFormData({...formData, link: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800/50 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500 h-32 font-mono text-xs" placeholder="<iframe src='...' ></iframe>" />
+                                    
+                                    <label className="text-[10px] font-black uppercase tracking-widest text-zinc-500 ml-4 mt-4 block">Source Link (Opens on Click)</label>
+                                    <input type="url" value={formData.sourceLink} onChange={e => setFormData({...formData, sourceLink: e.target.value})} className="w-full bg-zinc-900/50 border border-zinc-800/50 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-amber-500" placeholder="https://..." />
                                 </div>
                             ) : (
                                 <>

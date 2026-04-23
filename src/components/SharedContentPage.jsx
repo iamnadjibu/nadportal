@@ -27,7 +27,8 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
         return () => unsubscribe();
     }, [typeFilter]);
 
-    const handleWebsiteClick = async (e, id, link) => {
+    const handleLinkClick = async (e, id, link) => {
+        if (!link) return;
         e.preventDefault();
         try {
             await updateDoc(doc(db, 'nad_projects', id), {
@@ -79,7 +80,7 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
                                 <img src={p.logo || p.thumbnail} alt={p.title} className="w-full h-full object-cover" />
                             </div>
                             <h3 className="text-xl font-black text-white uppercase tracking-tighter mb-8 group-hover:text-amber-50 transition-colors">{p.title}</h3>
-                            <a href={p.link} onClick={(e) => handleWebsiteClick(e, p.id, p.link)} className="w-full relative group/btn">
+                            <a href={p.link} onClick={(e) => handleLinkClick(e, p.id, p.link)} className="w-full relative group/btn">
                                 <div className="absolute inset-0 bg-amber-500 rounded-2xl blur-md opacity-0 group-hover/btn:opacity-50 transition-opacity duration-300"></div>
                                 <div className="relative bg-white text-black py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-amber-500 hover:text-white transition-all shadow-xl block border border-transparent hover:border-amber-400">
                                     Open Node
@@ -89,11 +90,19 @@ export default function SharedContentPage({ typeFilter, pageTitle, subtitle, isW
                     ) : p.type === 'GRAPHIC' ? (
                         <div 
                             key={p.id} 
-                            className="group bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] flex flex-col relative w-full"
+                            onClick={(e) => p.sourceLink && handleLinkClick(e, p.id, p.sourceLink)}
+                            className={`group bg-zinc-900/30 rounded-[3rem] overflow-hidden border border-zinc-800/50 transition-all duration-500 hover:-translate-y-3 hover:shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)] flex flex-col relative w-full ${p.sourceLink ? 'cursor-pointer hover:border-amber-500/50' : ''}`}
                             style={{ animation: `fadeInUp 0.8s ease-out forwards`, animationDelay: `${index * 0.15}s`, opacity: 0 }}
                         >
                             <div className="w-full aspect-video flex justify-center items-center bg-black/50 overflow-hidden relative">
-                                <div className="w-full h-full flex items-center justify-center [&>iframe]:w-full [&>iframe]:h-full" dangerouslySetInnerHTML={{ __html: p.link }} />
+                                <div className={`w-full h-full flex items-center justify-center [&>iframe]:w-full [&>iframe]:h-full ${p.sourceLink ? 'pointer-events-none' : ''}`} dangerouslySetInnerHTML={{ __html: p.link }} />
+                                {p.sourceLink && (
+                                    <div className="absolute inset-0 bg-amber-500/0 group-hover:bg-amber-500/5 transition-colors duration-500 flex items-center justify-center">
+                                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-amber-500 text-black px-4 py-2 rounded-full text-[8px] font-black uppercase tracking-widest shadow-xl transform translate-y-4 group-hover:translate-y-0">
+                                            View Source
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             
                             <div className="p-8 relative mt-auto">
