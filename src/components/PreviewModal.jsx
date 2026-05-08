@@ -13,8 +13,16 @@ function formatLinkForEmbed(url) {
     }
     
     // Google Drive
-    if (url.includes('drive.google.com') && url.includes('/view')) {
-        return url.replace(/\/view.*$/, '/preview');
+    if (url.includes('drive.google.com')) {
+        // Handle /file/d/ID/view format
+        if (url.includes('/file/d/')) {
+            return url.replace(/\/view.*$/, '/preview').replace(/\/edit.*$/, '/preview');
+        }
+        // Handle open?id=ID format
+        const driveMatch = url.match(/[?&]id=([^&]+)/);
+        if (driveMatch) {
+            return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+        }
     }
     
     // Mega
