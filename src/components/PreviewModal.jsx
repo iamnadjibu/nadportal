@@ -5,9 +5,23 @@ import { db } from '../config/firebase';
 
 function formatLinkForEmbed(url) {
     if (!url) return '';
+    
+    // YouTube
+    const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|shorts\/))([\w-]{11})/);
+    if (ytMatch) {
+        return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    }
+    
+    // Google Drive
     if (url.includes('drive.google.com') && url.includes('/view')) {
         return url.replace(/\/view.*$/, '/preview');
     }
+    
+    // Mega
+    if (url.includes('mega.nz/file/')) {
+        return url.replace('mega.nz/file/', 'mega.nz/embed/');
+    }
+    
     return url;
 }
 
