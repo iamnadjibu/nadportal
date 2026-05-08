@@ -12,7 +12,7 @@ export default function ProtectedLayout() {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             if (!currentUser) {
-                navigate('/admin');
+                navigate('/admin/login');
             } else {
                 setUser(currentUser);
             }

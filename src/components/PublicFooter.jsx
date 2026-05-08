@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { Globe, Mail, MapPin } from 'lucide-react';
+import { Instagram, Twitter, Youtube, Mail, MapPin } from 'lucide-react';
 
 const defaultFooterData = {
     brief: "We craft stunning visuals and user-friendly experiences that help your brand stand out and connect with your audience. Visionary directing at its finest.",
@@ -92,13 +92,13 @@ export default function PublicFooter() {
                         <h4 className="text-white font-black uppercase tracking-widest text-sm mb-6 pb-2 border-b border-zinc-800 inline-block">Connect</h4>
                         <div className="flex space-x-4">
                             <a href={footerData.socials?.instagram} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Globe size={18} />
+                                <Instagram size={18} />
                             </a>
                             <a href={footerData.socials?.twitter} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Globe size={18} />
+                                <Twitter size={18} />
                             </a>
                             <a href={footerData.socials?.youtube} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Globe size={18} />
+                                <Youtube size={18} />
                             </a>
                             <a href={`mailto:${footerData.socials?.email}`} className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
                                 <Mail size={18} />

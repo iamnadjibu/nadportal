@@ -52,12 +52,12 @@ export default function App() {
                 </Route>
 
                 {/* Admin Auth Routes */}
-                <Route path="/admin" element={<Login />} />
                 <Route path="/admin/login" element={<Login />} />
                 <Route path="/admin/signup" element={<Signup />} />
 
                 {/* Secure Admin Dashboard Routes */}
                 <Route path="/admin" element={<ProtectedLayout />}>
+                    <Route index element={<Dashboard />} />
                     <Route path="dashboard" element={<Dashboard />} />
                     <Route path="films" element={<AdminFilms />} />
                     <Route path="graphics" element={<AdminGraphics />} />
