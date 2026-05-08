@@ -2,7 +2,29 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
-import { Instagram, Twitter, Youtube, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
+
+const InstagramIcon = ({ size = 18 }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+    </svg>
+);
+
+const TwitterIcon = ({ size = 18 }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4l11.733 16h4.267l-11.733 -16z"/>
+        <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/>
+    </svg>
+);
+
+const YoutubeIcon = ({ size = 18 }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2.5 7.1C2.5 7.1 2.5 5.5 3.3 4.7C4.3 3.6 5.5 3.6 6 3.5C8.4 3.3 12 3.3 12 3.3C12 3.3 15.6 3.3 18 3.5C18.5 3.6 19.7 3.6 20.7 4.7C21.5 5.5 21.5 7.1 21.5 7.1C21.5 7.1 21.7 8.7 21.7 10.3V11.7C21.7 13.3 21.5 14.9 21.5 14.9C21.5 14.9 21.5 16.5 20.7 17.3C19.7 18.4 18.3 18.3 17.7 18.5C15.5 18.7 12 18.7 12 18.7C12 18.7 8.4 18.7 6 18.5C5.5 18.4 4.3 18.4 3.3 17.3C2.5 16.5 2.5 14.9 2.5 14.9C2.5 14.9 2.3 13.3 2.3 11.7V10.3C2.3 8.7 2.5 7.1 2.5 7.1Z" />
+        <polygon points="9.5 14.2 15.5 10.5 9.5 6.8 9.5 14.2" />
+    </svg>
+);
 
 const defaultFooterData = {
     brief: "We craft stunning visuals and user-friendly experiences that help your brand stand out and connect with your audience. Visionary directing at its finest.",
@@ -92,13 +114,13 @@ export default function PublicFooter() {
                         <h4 className="text-white font-black uppercase tracking-widest text-sm mb-6 pb-2 border-b border-zinc-800 inline-block">Connect</h4>
                         <div className="flex space-x-4">
                             <a href={footerData.socials?.instagram} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Instagram size={18} />
+                                <InstagramIcon size={18} />
                             </a>
                             <a href={footerData.socials?.twitter} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Twitter size={18} />
+                                <TwitterIcon size={18} />
                             </a>
                             <a href={footerData.socials?.youtube} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
-                                <Youtube size={18} />
+                                <YoutubeIcon size={18} />
                             </a>
                             <a href={`mailto:${footerData.socials?.email}`} className="w-10 h-10 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-500 hover:text-amber-500 hover:border-amber-500 transition-all hover:scale-110">
                                 <Mail size={18} />
